@@ -177,28 +177,34 @@ export default function ReportPage() {
           </div>
         </div>
 
-        {/* Patient info */}
-        {(profile.name || profile.diagnosisType || profile.neurologist) && (
-          <section className="mb-5">
-            <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
-              Patient information
-            </h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-              {profile.name && (
-                <Row label="Name" value={profile.name} />
-              )}
-              {profile.dateOfBirth && (
-                <Row label="Date of birth" value={profile.dateOfBirth} />
-              )}
-              {profile.diagnosisType && (
-                <Row label="Diagnosis" value={profile.diagnosisType} />
-              )}
-              {profile.neurologist && (
-                <Row label="Neurologist" value={profile.neurologist} />
-              )}
-            </div>
-          </section>
-        )}
+     {/* Patient info */}
+{(profile.name || profile.diagnosisType || profile.neurologist || profile.emergencyContact) && (
+  <section className="mb-5">
+    <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+      Patient information
+    </h3>
+    <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+      {profile.name && (
+        <Row label="Name" value={profile.name} />
+      )}
+      {profile.dateOfBirth && (
+        <Row label="Date of birth" value={profile.dateOfBirth} />
+      )}
+      {profile.diagnosisType && (
+        <Row label="Diagnosis" value={profile.diagnosisType} />
+      )}
+      {profile.neurologist && (
+        <Row label="Neurologist" value={profile.neurologist} />
+      )}
+      {profile.emergencyContact && (
+        <Row label="Emergency contact" value={profile.emergencyContact} />
+      )}
+      {profile.emergencyPhone && (
+        <Row label="Emergency phone" value={profile.emergencyPhone} />
+      )}
+    </div>
+  </section>
+)}
 
         {/* Summary stats */}
         <section className="mb-5">
