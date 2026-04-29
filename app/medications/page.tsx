@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useMedications } from '@/hooks/useMedications'
 import { logMedication, getMedicationLogs } from '@/lib/storage'
 import { Medication } from '@/types'
-
+import { useNotifications } from '@/hooks/useNotifications'
 const MED_COLORS = [
   { label: 'Violet', class: 'bg-violet-400' },
   { label: 'Blue',   class: 'bg-blue-400' },
@@ -284,7 +284,7 @@ function MedCard({
 export default function MedicationsPage() {
   const { medications, add, update, remove } = useMedications()
   const [showForm, setShowForm] = useState(false)
-
+ const { status, subscribe } = useNotifications()
   const todayStr = new Date().toISOString().split('T')[0]
 
   const logs = getMedicationLogs().filter(l =>
@@ -311,7 +311,32 @@ export default function MedicationsPage() {
 
   return (
     <main className="max-w-lg mx-auto px-4 py-6 pb-24">
+      
       <div className="flex items-center justify-between mb-6">
+      {status !== 'granted' && (
+  <div className="bg-violet-50 rounded-2xl p-4 mb-4 flex items-center justify-between">
+    <div>
+      <p className="text-sm font-medium text-violet-800">Get dose reminders</p>
+      <p className="text-xs text-violet-500 mt-0.5">
+        Notified at each scheduled dose time
+      </p>
+    </div>
+    <button
+      onClick={subscribe}
+      disabled={status === 'loading' || status === 'denied'}
+      className={`text-sm px-4 py-2 rounded-xl font-medium transition-colors ${
+        status === 'denied'
+          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+          : 'bg-violet-600 text-white hover:bg-violet-700'
+      }`}
+    >
+      {status === 'loading' ? 'Setting up...'
+        : status === 'denied' ? 'Blocked in browser'
+        : 'Enable reminders'}
+    </button>
+  </div>
+)}
+
         <h1 className="text-xl font-medium text-gray-900">Medications</h1>
         {!showForm && (
           <button
